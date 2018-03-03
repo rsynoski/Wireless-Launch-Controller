@@ -22,8 +22,14 @@ RotoryKnob::~RotoryKnob() {
 void RotoryKnob::poll() {
 	int direction;
 	 direction = encoder->read();
-	if (direction == CC) Serial << "CC" << endl;
-	if (direction == CCW) Serial << "CCW" << endl;
+	if (direction == CC) {
+		controllers.next();
+		Serial << controllers.current()->getDeviceId() << endl;
+	}
+	if (direction == CCW) {
+		controllers.previous();
+		Serial << controllers.current()->getDeviceId() << endl;
+	}
 	pushSwitch->poll();
 	if (pushSwitch->pushed()) Serial << "Knob Pressed" << endl;
 	if (pushSwitch->doubleClick()) Serial << "Knob Click" << endl;

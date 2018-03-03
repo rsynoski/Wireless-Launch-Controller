@@ -7,6 +7,7 @@
 
 #include "Selector.h"
 #include "Arm.h"
+#include "Streaming.h"
 
 extern Arm armingSwitch;
 
@@ -15,7 +16,7 @@ extern Arm armingSwitch;
 //
 //}
 
-Selector::Selector(byte a, int b, int c) : togglePort(a), selLED(b), contLED(c){
+Selector::Selector(int num, byte a, int b, int c) : togglePort(a), selLED(b), contLED(c), number(num){
 	toggle = new Switch(togglePort);
 	pinMode(selLED, OUTPUT);
 	pinMode(contLED, OUTPUT);
@@ -33,6 +34,7 @@ void Selector::poll(){
 	toggle->poll();
 	if (armingSwitch.isArmed()){
 		if (toggle->pushed()) {
+			Serial << "cnt: " << cnt++ << endl;
 			digitalWrite(selLED, digitalRead(selLED) == HIGH ? LOW : HIGH);
 		}
 	}else {

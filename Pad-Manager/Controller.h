@@ -15,14 +15,15 @@ class Controller {
 private:
 	int padCnt;             // number of pads supported by controller
 	XBeeAddress64 address;  // address of the Pad Controller
-	char deviceId[];        // XBee device Id i.e. the name of the controller
+	char *deviceId;        // XBee device Id i.e. the name of the controller
 	long lastMsgTime;       // millis of the last message received
 	Pad *pads;
 public:
-	Controller(int cnt);
+	Controller(int cnt, char name[]);
 	virtual ~Controller();
 
 	const Pad* getPads() const;
+	const char* getDeviceId() const;
 };
 
 #endif /* CONTROLLER_H_ */

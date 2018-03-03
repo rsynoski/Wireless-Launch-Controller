@@ -16,3 +16,5 @@ Pad::~Pad() {
 	// TODO Auto-generated destructor stub
 }
 
+void Pad::refresh() {
+}

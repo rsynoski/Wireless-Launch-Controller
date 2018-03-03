@@ -17,15 +17,17 @@
 class Selector {
 
 private:
+	int number;
 	byte togglePort;
 	Switch *toggle;
 	int selLED;
 	int contLED;
 	Metro blink{250};
+	int cnt; // remove
 
 public:
 //	Selector();
-	Selector(byte a, int b, int c);
+	Selector(int num, byte a, int b, int c);
 	virtual ~Selector();
 	bool getToggle() ;
 	void poll();

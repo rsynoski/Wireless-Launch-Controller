@@ -13,6 +13,9 @@
 #include "arduino.h"
 #include "avdweb_switch.h"
 #include "DirectionalEncoder.h"
+#include "Controllers.h"
+
+extern Controllers controllers;
 
 class RotoryKnob {
 private:

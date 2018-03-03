@@ -10,6 +10,7 @@
 #include "Fire.h"
 #include "RotoryKnob.h"
 #include "Controller.h"
+#include "Controllers.h"
 #include "ports.h"
 
 
@@ -18,19 +19,17 @@
 Arm armingSwitch{ARMING_SWITCH, ARMING_LED};
 Fire fire{FIRE_BUTTON};
 RotoryKnob rotoryKnob{ENCODER_A, ENCODER_B, ENCODER_PUSH};
-Selector X[NUM_SEL] = {
-		{ SEL0_SWITCH, SEL0_SELLED, SEL0_CONTLED },
-		{ SEL1_SWITCH, SEL1_SELLED, SEL1_CONTLED },
-		{ SEL2_SWITCH, SEL2_SELLED, SEL2_CONTLED },
-		{ SEL3_SWITCH, SEL3_SELLED, SEL3_CONTLED }
+Selector selectors[NUM_SEL] = {
+		{ 0, SEL0_SWITCH, SEL0_SELLED, SEL0_CONTLED },
+		{ 1, SEL1_SWITCH, SEL1_SELLED, SEL1_CONTLED },
+		{ 2, SEL2_SWITCH, SEL2_SELLED, SEL2_CONTLED },
+		{ 3, SEL3_SWITCH, SEL3_SELLED, SEL3_CONTLED }
 		};
+Controllers controllers;
 XBee xbee;
 Metro d(1000);
 
-Controller *controllers[2];
-struct {
-unsigned short cc : 2;
-}currentControllerIdx;
+
 
 
 //The setup function is called once at startup of the sketch
@@ -43,9 +42,7 @@ void setup() {
 
 	Serial1.begin(38400);
 	xbee.begin(Serial1);
-	controllers[0] = new Controller(2);
-	controllers[1] = new Controller(2);
-	currentControllerIdx.cc = 0;
+
 
 
 
@@ -66,9 +63,10 @@ void loop() {
 	rotoryKnob.poll();
 	armingSwitch.poll();
 	fire.poll();
-	X[0].poll();
-	X[0].showContinuity("22.0");
-	X[1].poll();
+	selectors[0].poll();
+	selectors[0].showContinuity("2.0");
+	selectors[1].poll();
+	selectors[1].showContinuity("0.2");
 
 
 //	if (d.check()){

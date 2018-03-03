@@ -18,13 +18,13 @@
 #define SEL1_SELLED 17
 #define SEL1_CONTLED 16
 
-#define SEL2_SWITCH 21
-#define SEL2_SELLED 20
-#define SEL2_CONTLED 19
+#define SEL2_SWITCH 32
+#define SEL2_SELLED 31
+#define SEL2_CONTLED 30
 
-#define SEL3_SWITCH 18
-#define SEL3_SELLED 17
-#define SEL3_CONTLED 16
+#define SEL3_SWITCH 29
+#define SEL3_SELLED 28
+#define SEL3_CONTLED 27
 
 #define ARMING_SWITCH 23
 #define ARMING_LED   22
