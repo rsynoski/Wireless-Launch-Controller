@@ -18,14 +18,12 @@ public:
 	virtual ~Pad();
 
 	void refresh();
-
-	int getNumber() const {
-		return number;
-	}
-
-	void setNumber(int number = 0) {
-		this->number = number;
-	}
+	const char* getContinunity() const;
+	void setContinunity(char * val);
+	int getNumber() const;
+	void setNumber(int number);
+	bool isSelectState() const;
+	void setSelectState(bool selectState);
 };
 
 #endif /* PAD_H_ */

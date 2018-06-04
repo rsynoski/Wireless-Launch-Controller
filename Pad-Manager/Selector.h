@@ -12,7 +12,7 @@
 #include "Metro.h"
 
 #define NO_CONT 20.0
-#define SHORTED 0.3
+#define SHORTED 0.2
 
 class Selector {
 
@@ -22,7 +22,7 @@ private:
 	Switch *toggle;
 	int selLED;
 	int contLED;
-	Metro blink{250};
+	Metro blink{250,1};
 	int cnt; // remove
 
 public:
@@ -32,7 +32,9 @@ public:
 	bool getToggle() ;
 	void poll();
 	bool isSelected();
-	void showContinuity(char value[]);
+	void showContinuity();
+	void showSelection();
+	void clear();
 };
 
 #endif /* SELECTOR_H_ */

@@ -8,8 +8,12 @@
 #include "Selector.h"
 #include "Arm.h"
 #include "Streaming.h"
+#include "Controllers.h"
+#include "Notes.h"
+#include "Ports.h"
 
 extern Arm armingSwitch;
+extern Controllers controllers;
 
 //Selector::Selector() {
 //	// TODO Auto-generated constructor stub
@@ -32,21 +36,32 @@ bool Selector::getToggle() {
 
 void Selector::poll(){
 	toggle->poll();
-	if (armingSwitch.isArmed()){
-		if (toggle->pushed()) {
-			Serial << "cnt: " << cnt++ << endl;
-			digitalWrite(selLED, digitalRead(selLED) == HIGH ? LOW : HIGH);
-		}
-	}else {
-		digitalWrite(selLED, LOW);
-	}
+	showSelection();
+	showContinuity();
+
 }
 
 bool Selector::isSelected(){
 	return digitalRead(selLED) == HIGH;
 }
 
-void Selector::showContinuity(char value[]) {
+void Selector::showSelection() {
+	if (armingSwitch.isArmed()){
+		if (toggle->pushed()) {
+			tone(SPEAKER, NOTE_C5, 50);
+			Serial << "Pushed" << endl;
+			Serial << controllers.current()->getPads()[number].isSelectState() << endl;
+			controllers.current()->togglePadSelection(number);
+		}
+		digitalWrite(selLED, controllers.current()->getPads()[number].isSelectState() ? HIGH : LOW);
+	}else {
+		controllers.current()->getPads()[number].setSelectState(false);
+		digitalWrite(selLED, LOW);
+	}
+
+}
+void Selector::showContinuity() {
+	const char *value = controllers.current()->getPads()[number].getContinunity();
 	float val = String(value).toFloat();
 	if (val > NO_CONT) {
 		digitalWrite(contLED, LOW);
@@ -59,3 +74,6 @@ void Selector::showContinuity(char value[]) {
 	}
 }
 
+void Selector::clear() {
+	digitalWrite(contLED, LOW);
+}

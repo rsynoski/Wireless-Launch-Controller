@@ -7,9 +7,15 @@
 
 #include "Fire.h"
 #include "streaming.h"
+#include "Arm.h"
+#include "Controllers.h"
+
+extern Arm armingSwitch;
+extern Controllers controllers;
 
 Fire::Fire(uint8_t swtch) {
 	button = new Switch(swtch);
+//	button = new Switch(swtch, INPUT_PULLUP, LOW, 1000);
 }
 
 Fire::~Fire() {
@@ -18,12 +24,19 @@ Fire::~Fire() {
 
 void Fire::poll() {
 	button->poll();
-		if (button->pushed()) {
-		Serial << "Fire pressed" << endl;
+	if (button->pushed()) {
+		if (armingSwitch.isArmed()) {
+			controllers.firePress();
+			Serial << "Fire pressed" << endl;
 		}
-		if (button->released()) {
+	}
+	if (button->released()) {
+		if (armingSwitch.isArmed()) {
+			controllers.fireRelease();
 			Serial << "Fire released" << endl;
+			controllers.clearControllers();
 		}
+	}
 
 
 }

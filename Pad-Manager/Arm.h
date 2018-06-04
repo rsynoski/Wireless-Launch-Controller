@@ -17,6 +17,7 @@ class Arm {
 private:
 	Switch *key;
 	int led;
+	bool powerUp = true;
 public:
 	Arm(uint8_t swtch, uint8_t led);
 	void poll();
