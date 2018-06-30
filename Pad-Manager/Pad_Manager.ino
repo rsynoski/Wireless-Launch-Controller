@@ -18,6 +18,7 @@
 #include "Display.h"
 #include "ports.h"
 #include "Notes.h"
+#include "Time.h"
 
 
 
@@ -60,6 +61,14 @@ void setup() {
 	digitalWrite(SEL3_SELLED, LOW);
 	digitalWrite(SEL3_CONTLED, LOW);
 
+	// Set the System Clock
+	setSyncProvider(getTeensy3Time);
+		  if (timeStatus()!= timeSet) {
+		    Serial.println("Unable to sync with the RTC");
+		  } else {
+		    Serial.println("RTC has set the system time");
+		  }
+
 	// Setup XBee Serial
 	Serial.begin(9600);
 	Serial1.begin(115200);
@@ -70,7 +79,7 @@ void setup() {
 
 	GLCD.OnBacklight();
 	GLCD.SelectFont(TimesNewRoman13);
-	 GLCD.print("Pad Manager Setup");
+//	 GLCD.print("Pad Manager Setup");
 #ifdef DEBUG
 	Serial.println("Setup");
 #endif
@@ -110,6 +119,7 @@ GLCD.OffBacklight();
 
 // The loop function is called in an endless loop
 void loop() {
+
 #ifdef DEBUG
 	{
 		static bool loopStart = true;
@@ -146,7 +156,7 @@ void loop() {
 
 }
 
-#define TESTDELAY 200
+#define TESTDELAY 100
 void LEDTest () {
 
 	// Blink Arm twice
@@ -188,3 +198,9 @@ void LEDTest () {
 	delay(TESTDELAY);
 	digitalWrite(SEL0_CONTLED, LOW);
 }
+
+time_t getTeensy3Time()
+{
+  return Teensy3Clock.get();
+}
+

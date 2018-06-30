@@ -33,6 +33,7 @@ bool Arm::isArmed() {
 #ifdef DEBUG
 	return key->on();
 #else
+	if (controllers.current() == NULL) powerUp = true;
 	bool on = key->on();
 	if (!on) {
 		powerUp = false;
@@ -42,6 +43,7 @@ bool Arm::isArmed() {
 		on = false;
 		}
 	}
+
 	return on;
 #endif
 }
