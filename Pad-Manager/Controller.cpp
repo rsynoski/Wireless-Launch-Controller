@@ -42,7 +42,7 @@ Serial.println("Controller Destr 2");
 void Controller::reset() {
 	for (int i=0; i<padCnt; i++) {
 		pads[i].setSelectState(false);
-//		pads[i].setContinunity("9999");
+//		pads[i].setContinunity("99.9");
 	}
 	sendReset();
 }

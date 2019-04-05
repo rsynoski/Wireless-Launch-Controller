@@ -137,7 +137,9 @@ void loop() {
 	armingSwitch.poll();
 	fire.poll();
 	if (controllers.current() != NULL) {
-		for (int i=0; i<NUM_SELECTORS; i++){
+		for (int i=0; i<controllers.current()->getPadCnt(); i++){
+			Serial.print("num:");
+			Serial.println(i);
 			selectors[i].poll();
 		}
 	} else {

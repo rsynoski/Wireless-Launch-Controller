@@ -11,7 +11,7 @@
 class Pad {
 private:
 int number = 0;
-char continunity[5] = "00.0";
+char continunity[5] = "99.9";
 bool selectState = false;
 public:
 	Pad();
